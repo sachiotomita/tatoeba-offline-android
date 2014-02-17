@@ -92,13 +92,20 @@ public class CutterTask extends AsyncTask<Void, Integer, Boolean>
                     continue;
 
                 temporaryContainer.add( sentenceToInsert );
+                synchronized (temporaryContainer) {
+                    temporaryContainer.add( sentenceToInsert );
+				 }
 
                 progress += line.length();
 
                 if ( lineNumber % UPDATE_EVERY_X_SENTENCES == 0 )
                 {
-                    workMaterial.offer( temporaryContainer );
-                    workMaterial.notify();
+                	synchronized (workMaterial) {
+                        workMaterial.offer( temporaryContainer );
+                        workMaterial.notify();
+                	}
+
+ 
                     Log.v( "CutterTask", "parsed: " + lineNumber + " sentences." );
                     temporaryContainer.clear();
 
@@ -177,23 +184,34 @@ public class CutterTask extends AsyncTask<Void, Integer, Boolean>
             Vector<Sentence> sentencesToAdd = null;
             while ( !finished )
             {
-                try
-                {
-                    workMaterial.wait();
-                }
-                catch ( InterruptedException e )
-                {
-                    finished = true;
-                }
+	                try
+	                {
+	
+	                	synchronized (workMaterial) {
 
-                do
-                {
-                    sentencesToAdd = workMaterial.poll();
-
-                    if ( sentencesToAdd != null && !sentencesToAdd.isEmpty() )
-                        database.insertMany( sentencesToAdd );
-
-                } while ( sentencesToAdd.isEmpty() );
+	                        workMaterial.wait();	
+	                	}
+					
+	                }
+	                catch ( InterruptedException e )
+	                {
+	                    finished = true;
+	                }
+	
+	                do
+	                {
+	                	synchronized (workMaterial) {
+	                		sentencesToAdd = workMaterial.poll();
+	                	}
+	
+	                    if ( sentencesToAdd != null && !sentencesToAdd.isEmpty() ) {
+	                    	synchronized (database) {
+		                        database.insertMany( sentencesToAdd );
+							}
+	                    }
+	
+	                } while ( sentencesToAdd == null || sentencesToAdd.isEmpty() );
+            	
             }
         }
     }
