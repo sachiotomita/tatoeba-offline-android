@@ -93,16 +93,11 @@ public class DBAdapter
         assert db != null && db.isOpen();
         assert sentences.size() > 0;
 
-        ContentValues[] initialValues = new ContentValues[sentences.size()];
-        for ( int i = 0; i < sentences.size(); ++i )
-        {
-            initialValues[i] = prepareSentenceForInsertion( sentences.get( i ) );
-        }
 
         db.beginTransaction();
         for ( int i = 0; i < sentences.size(); ++i )
         {
-            db.insert( TABLE_NAME, null, initialValues[i] );
+            db.insert( TABLE_NAME, null, prepareSentenceForInsertion( sentences.get( i ) ) );
         }
         db.endTransaction();
 
