@@ -29,7 +29,7 @@ public class Search extends Activity
         editSearch = (EditText) findViewById( R.id.editSearch );
 
         // until the file is loaded, the button is disabled
-        searchButton.setEnabled( false );
+        searchButton.setEnabled(true);
     }
 
     @Override
@@ -91,6 +91,7 @@ public class Search extends Activity
         @Override
         public void handleMessage( Message msg )
         {
+        	/*
             switch ( msg.what )
             {
             case DEACTIVATE_BUTTON:
@@ -100,6 +101,7 @@ public class Search extends Activity
                 searchButton.setActivated( true );
                 break;
             }
+            */
         }
     };
 
