@@ -3,6 +3,7 @@ package org.tatoeba.searchsentences;
 import java.io.FileNotFoundException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.ProgressBar;
@@ -12,11 +13,15 @@ public class CutterActivity extends Activity
 {
     static private String SENTENCES_FILENAME = "/storage/extSdCard/Download/sentences.csv";
 
+    private Activity cutter;
+
     @Override
     protected void onCreate( Bundle savedInstanceState )
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_cutter );
+
+        cutter = this;
 
         progressBar = (ProgressBar) findViewById( R.id.cutterProgress );
         assert progressBar != null;
@@ -58,11 +63,27 @@ public class CutterActivity extends Activity
         assert dbAdapter != null;
         dbAdapter.open();
 
-        cutterTask = new CutterTask( SENTENCES_FILENAME, progressBar, dbAdapter );
+        cutterTask = new PrivateCutterTask( SENTENCES_FILENAME, progressBar, dbAdapter );
         cutterTask.execute( new Void[1] );
     }
 
-    private CutterTask cutterTask;
+    private class PrivateCutterTask extends CutterTask {
+    	PrivateCutterTask(String path, ProgressBar progressBar,
+				DBAdapter storage) throws FileNotFoundException {
+			super(path, progressBar, storage);
+			// TODO Auto-generated constructor stub
+		}
+
+		@Override
+    	protected void onPostExecute(Boolean result) {
+    		// TODO Auto-generated method stub
+    		super.onPostExecute(result);
+    		Intent searchIntent = new Intent(cutter, Search.class);
+    		cutter.startActivity(searchIntent);
+    	}
+    }
+
+    private PrivateCutterTask cutterTask;
     private ProgressBar progressBar;
     private TextView editText;
     private DBAdapter dbAdapter;
