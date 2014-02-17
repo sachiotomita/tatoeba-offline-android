@@ -11,8 +11,7 @@ import android.widget.TextView;
 
 public class CutterActivity extends Activity
 {
-    static private String SENTENCES_FILENAME = "/storage/extSdCard/Download/sentences.csv";
-
+    static private String SENTENCES_FILENAME = "/storage/sdcard0/Download/sentences.csv";
     private Activity cutter;
 
     @Override
