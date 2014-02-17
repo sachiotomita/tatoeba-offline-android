@@ -93,8 +93,7 @@ public class BufferToSentenceParser
                 languageName[nbCharInLang++] = str[i++];
             } while ( i < length && nbCharInLang < Language.NB_CHARS && str[i] != '\t' );
 
-            languageName[nbCharInLang] = '\0';
-            Language lang = new Language( languageName );
+            Language lang = new Language(new String(languageName));
 
             i++;
             if ( i == length )

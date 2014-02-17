@@ -17,7 +17,7 @@ public class LanguageFilter implements Filter
      */
     public LanguageFilter( String language )
     {
-        lang = new Language( language.toCharArray() );
+        lang = new Language( language);
     }
 
     /**

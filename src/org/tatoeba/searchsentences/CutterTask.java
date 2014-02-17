@@ -161,7 +161,7 @@ public class CutterTask extends AsyncTask<Void, Integer, Boolean>
 
         // constructs the sentence object
         int id = Integer.valueOf( sections[0] );
-        Language language = new Language( parsedLanguage );
+        Language language = new Language(sections[1]);
         String data = new String( sections[2] );
         Sentence sentence = new Sentence( id, language, data );
 

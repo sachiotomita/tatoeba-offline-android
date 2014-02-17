@@ -10,35 +10,28 @@ public class Language
 {
     public static final int NB_CHARS = 5;
 
-    public Language( char code[] )
+    public Language(String code)
     {
-        this.code = new char[NB_CHARS];
-        for ( int i = 0; i < NB_CHARS; ++i )
-        {
-            this.code[i] = i < code.length ? code[i] : '\0';
-        }
-
+        this.code = code;
     }
 
     public boolean equals( Language other )
     {
-        int max = Math.min( other.code.length, NB_CHARS );
-        for ( int i = 0; i < max; ++i )
-        {
-            if ( other.code[i] != this.code[i] )
-                return false;
+
+        if (other.code.equals(this.code)) {
+           return true;
         }
         return true;
     }
 
-    public char[] name()
+    public String name()
     {
         return code;
     }
 
     public String toString()
     {
-        return new String( code );
+        return code;
     }
 
     public static String FRA = "fra";
@@ -54,6 +47,6 @@ public class Language
      * tel, tgk, tgl, tha, tlh, toki, tpi, tpw, tur, uig, ukr, urd, uzb, vie,
      * vol, wuu, xal, xho, yid, yue, zsm }
      */
-    private char code[];
+    private String code;
 
 }

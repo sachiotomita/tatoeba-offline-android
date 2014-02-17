@@ -111,10 +111,16 @@ public class DBAdapter
 
     private ContentValues prepareSentenceForInsertion( Sentence sentence )
     {
+    	int sentenceId = sentence.getId();
+    	String lang = new String(sentence.language().name());
+    	String data = sentence.data();
+    	
         ContentValues initialValues = new ContentValues();
-        initialValues.put( KEY_ID, sentence.getId() );
-        initialValues.put( KEY_LANGUAGE, new String( sentence.language().name() ) );
-        initialValues.put( KEY_DATA, sentence.toString() );
+        initialValues.put( KEY_ID, sentenceId );
+        initialValues.put( KEY_LANGUAGE, lang );
+        initialValues.put( KEY_DATA, data );
+        Log.d("prepare", lang + " " + data + " " + sentenceId);
+        Log.d("prepare", initialValues.toString());
 
         return initialValues;
     }
@@ -131,7 +137,7 @@ public class DBAdapter
 
         cursor.moveToFirst();
         assert sentenceId == cursor.getInt( 0 );
-        Language language = new Language( cursor.getString( 1 ).toCharArray() );
+        Language language = new Language( cursor.getString( 1 ));
         Sentence sentence = new Sentence( sentenceId, language, cursor.getString( 2 ) );
         cursor.close();
 
