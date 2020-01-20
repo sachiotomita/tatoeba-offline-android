@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SearchSentences</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_cutter">CutterActivity</string>
+    <string name="cutter_description">Preprocessing data file: this will take a while, but when it\'s done, you will be smarter, richer, and possible better-looking, even though this is not completely guaranteed.</string>
+
+</resources>
